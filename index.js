@@ -20,6 +20,7 @@ const { deleteOne } = require('./Schema/User');
 const { url } = require('inspector');
 const upload = multer({ storage});
 const dbUrl = process.env.DB_URL;
+const PORT = 8000;
 //mongodb://localhost:27017/users
 //process.env.DB_URL
 
