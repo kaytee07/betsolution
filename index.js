@@ -383,6 +383,18 @@ app.get('/weekend',async (req,res)=> {
 	
 })
 
+function errorHandler(err, req, res, next) {
+	if (err instanceof multer.MulterError) {
+	  // Multer error occurred
+	  res.status(500).json({ error: err.message });
+	} else {
+	  // Some other error occurred
+	  console.log(err)
+	  res.status(500).json({ error: err });
+	}
+  }
+
+
 app.post("/fiveodds", upload.array('file'), async(req,res) => {
 	const newImage = new Image();
 	newImage.type = "fiveodds"
@@ -535,7 +547,7 @@ app.get("/weekendpay", (req, res) => {
     res.render('payment/weekendpay.ejs');
 });
 
-
+app.use(errorHandler);
 // app.listen(8000, ()=> {
 // console.log("LISTENING ON PORT 3008")
 // })
