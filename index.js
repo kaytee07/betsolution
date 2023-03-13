@@ -40,7 +40,16 @@ app.set('views', path.join(__dirname,'/views'))
 
 
 //mongoose.connect(dbUrl);
-mongoose.connect(dbUrl);
+//mongoose.connect(dbUrl);
+const connectDB = async () => {
+  try {
+    const conn = await mongoose.connect(dbUrl);
+    console.log(`MongoDB Connected: ${conn.connection.host}`);
+  } catch (error) {
+    console.log(error);
+    process.exit(1);
+  }
+}
 
 const requireLogin = (req, res, next) => {
 	if(!req.session.user_id){
@@ -526,9 +535,15 @@ app.get("/weekendpay", (req, res) => {
 });
 
 
-app.listen(8000, ()=> {
-console.log("LISTENING ON PORT 3008")
-})
+// app.listen(8000, ()=> {
+// console.log("LISTENING ON PORT 3008")
+// })
+connectDB().then(() => {
+    app.listen(PORT, () => {
+        console.log("listening for requests");
+    })
+
+
 
 app.get('*', (req, res)=> {
 res.send("I DONT KNOW THIS PATH")
