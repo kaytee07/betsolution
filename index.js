@@ -68,7 +68,7 @@ app.post("/straightdrawpay", (req, res) => {
         email: email,
         amount: kobo_amount,
         phone: phone_number,
-        callback_url: "https://betsolution.net/straightdraw"
+        callback_url: "https://www.betsolution.net/straightdraw"
     }).then(function(body) {
         //extract the reference
         let reference = body.data.reference
@@ -115,7 +115,7 @@ app.post("/weekendpay", (req, res) => {
         email: email,
         amount: kobo_amount,
         phone: phone_number,
-        callback_url: "https://betsolution.net/weekend"
+        callback_url: "https://www.betsolution.net/weekend"
     }).then(function(body) {
         //extract the reference
         let reference = body.data.reference
@@ -138,7 +138,7 @@ app.post("/nbapay", (req, res) => {
         email: email,
         amount: kobo_amount,
         phone: phone_number,
-        callback_url: "https://betsolution.net/basketball"
+        callback_url: "https://www.betsolution.net/basketball"
     }).then(function(body) {
         //extract the reference
         let reference = body.data.reference
@@ -160,7 +160,7 @@ app.post("/fixedgamepay", (req, res) => {
         email: email,
         amount: kobo_amount,
         phone: phone_number,
-        callback_url: "https://betsolution.net/fixedgame"
+        callback_url: "https://www.betsolution.net/fixedgame"
     }).then(function(body) {
         //extract the reference
         let reference = body.data.reference
