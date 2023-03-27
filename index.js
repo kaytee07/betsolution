@@ -59,7 +59,7 @@ const requireLogin = (req, res, next) => {
 	next();
 }
 
-
+//time
 app.post("/straightdrawpay", (req, res) => {
     const { email, amount, network, phone_number } = req.body;
 	let kobo_amount = amount * 100
