@@ -93,7 +93,7 @@ app.post("/fiveoddspay", (req, res) => {
         email: email,
         amount: kobo_amount,
         phone: phone_number,
-        callback_url: "https://betsolution.net/fiveodds"
+        callback_url: "https://www.betsolution.net/fiveoddspay"
     }).then(function(body) {
         //extract the reference
         let reference = body.data.reference
