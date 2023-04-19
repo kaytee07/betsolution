@@ -28,11 +28,11 @@ const PORT = 8000;
 app.use(express.static(path.join(__dirname,'/public')));
 app.use(session({
 	secret: process.env.SESSIONSECRET,
-	// resave: false,
-	// saveUninitialized: true,
-	// cookie: {
-	// 	expires: new Date(Date.now() + 3600000) // session will expire in 1 hour
-	//   },
+	resave: false,
+	saveUninitialized: true,
+	cookie: {
+		expires: new Date(Date.now() + 3600000) // session will expire in 1 hour
+	  },
   }));
 app.use(methodOverride("_method"))
 app.use(bodyParser.json());
