@@ -20,6 +20,7 @@ const { deleteOne } = require('./Schema/User');
 const { url } = require('inspector');
 const upload = multer({ storage});
 const dbUrl = process.env.DB_URL;
+const MongoStore = require('connect-mongo')(session);
 const PORT = 8000;
 //mongodb://localhost:27017/users
 //process.env.DB_URL
@@ -31,7 +32,12 @@ app.use(session({
 	saveUninitialized: true,
 	cookie: {
 		expires: new Date(Date.now() + 3600000) // session will expire in 1 hour
-	  }
+	  },
+	  store: new MongoStore({
+		url: process.env.MONGODB_URI,
+		autoRemove: 'native', // remove expired sessions from the database
+		ttl: 24 * 60 * 60 // expire sessions after 1 day (in seconds)
+	  })
   }));
 app.use(methodOverride("_method"))
 app.use(bodyParser.json());
