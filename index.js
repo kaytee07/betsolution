@@ -20,10 +20,11 @@ const { deleteOne } = require('./Schema/User');
 const { url } = require('inspector');
 const upload = multer({ storage});
 const dbUrl = process.env.DB_URL;
-// const MongoStore = require('connect-mongo')(session);
+ const MongoStore = require('connect-mongo');
 const PORT = 8000;
 //mongodb://localhost:27017/users
 //process.env.DB_URL
+
 
 app.use(express.static(path.join(__dirname,'/public')));
 app.use(session({
@@ -32,7 +33,7 @@ app.use(session({
 	saveUninitialized: true,
 	cookie: {
 		expires: new Date(Date.now() + 3600000) // session will expire in 1 hour
-	  },
+	  }
   }));
 app.use(methodOverride("_method"))
 app.use(bodyParser.json());
@@ -61,6 +62,7 @@ const requireLogin = (req, res, next) => {
 }
 
 //time
+
 app.post("/straightdrawpay", (req, res) => {
     const { email, amount, network, phone_number } = req.body;
 	let kobo_amount = amount * 100
@@ -178,14 +180,13 @@ app.post("/fixedgamepay", (req, res) => {
 
 
 app.get('/home', requireLogin, async (req,res) => {
-	console.log(req.session)
 	res.render('home.ejs')
 })
 
 app.get('/fiveodds', async (req,res)=> {
 	const user_id = req.session.user_id;
 	let {reference} = req.query;
-    console.log(req.session)
+
 	if(user_id){	
 		const image = await Image.find({type:"fiveodds"});
 				const info = {
@@ -204,7 +205,6 @@ app.get('/fiveodds', async (req,res)=> {
 
 	paystack.transaction.verify(reference, async function(error, body) {
         if (error) {
-			console.log(error)
             res.redirect('/fiveoddspay');
         }
         if (body.data.status === "success" && req.session.reference === reference || user_id) {      
@@ -397,9 +397,8 @@ function errorHandler(err, req, res, next) {
 	}
   }
 
-
 app.post("/fiveodds", upload.array('file'), async(req,res) => {
-	const newImage = new Image();
+	const newImage = new Image(); 
 	newImage.type = "fiveodds"
 	newImage.image = req.files.map(file => ({
 		url: file.path,
@@ -513,8 +512,7 @@ app.post('/login', async (req, res) => {
 	}
 	const validPassword = await bcrypt.compare(pass ,user.password);
 	if(validPassword){
-		req.session.user_id = user._id.toString();
-		console.log(req.session)
+		req.session.user_id = user._id;
 		res.redirect('/home');
 	}else{
 		res.redirect('/')
@@ -550,6 +548,8 @@ app.get("/straightdrawpay", (req, res) => {
 app.get("/weekendpay", (req, res) => {
     res.render('payment/weekendpay.ejs');
 });
+
+app.use(errorHandler);
 
 app.use(errorHandler);
 // app.listen(8000, ()=> {
