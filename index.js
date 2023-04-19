@@ -183,7 +183,7 @@ app.get('/home', requireLogin, async (req,res) => {
 app.get('/fiveodds', async (req,res)=> {
 	const user_id = req.session.user_id;
 	let {reference} = req.query;
-    console.log(user_id)
+    console.log(req.session)
 	if(user_id){	
 		const image = await Image.find({type:"fiveodds"});
 				const info = {
