@@ -178,6 +178,7 @@ app.post("/fixedgamepay", (req, res) => {
 
 
 app.get('/home', requireLogin, async (req,res) => {
+	console.log(req.session)
 	res.render('home.ejs')
 })
 
