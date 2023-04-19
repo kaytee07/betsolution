@@ -511,8 +511,7 @@ app.post('/login', async (req, res) => {
 	}
 	const validPassword = await bcrypt.compare(pass ,user.password);
 	if(validPassword){
-		console.log(user)
-		req.session.user_id = "dog";
+		req.session.user_id = user._id.toString();
 		console.log(req.session)
 		res.redirect('/home');
 	}else{
