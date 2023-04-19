@@ -28,16 +28,11 @@ const PORT = 8000;
 app.use(express.static(path.join(__dirname,'/public')));
 app.use(session({
 	secret: process.env.SESSIONSECRET,
-	resave: false,
-	saveUninitialized: true,
-	cookie: {
-		expires: new Date(Date.now() + 3600000) // session will expire in 1 hour
-	  },
-	  store: new MongoStore({
-		url: process.env.MONGODB_URI,
-		autoRemove: 'native', // remove expired sessions from the database
-		ttl: 24 * 60 * 60 // expire sessions after 1 day (in seconds)
-	  })
+	// resave: false,
+	// saveUninitialized: true,
+	// cookie: {
+	// 	expires: new Date(Date.now() + 3600000) // session will expire in 1 hour
+	//   },
   }));
 app.use(methodOverride("_method"))
 app.use(bodyParser.json());
